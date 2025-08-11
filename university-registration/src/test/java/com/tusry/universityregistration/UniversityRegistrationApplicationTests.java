@@ -1,0 +1,13 @@
+package com.tusry.universityregistration;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class UniversityRegistrationApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
