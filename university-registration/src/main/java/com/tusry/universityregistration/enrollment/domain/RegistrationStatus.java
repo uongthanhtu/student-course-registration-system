@@ -1,4 +1,7 @@
 package com.tusry.universityregistration.enrollment.domain;
 
-public class RegistrationStatus {
+public enum RegistrationStatus {
+    REGISTERED,
+    CANCELLED,
+    WAITING
 }
