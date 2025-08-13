@@ -68,7 +68,7 @@ public class Registration {
     }
 
     public boolean isActive() {
-        return this.status == RegistrationStatus.REGISTERED || this.status == RegistrationStatus.WAITING
+        return this.status == RegistrationStatus.REGISTERED || this.status == RegistrationStatus.WAITING;
     }
     public void cancel(){
         this.status = RegistrationStatus.CANCELLED;
