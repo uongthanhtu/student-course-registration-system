@@ -3,21 +3,22 @@ package com.tusry.universityregistration.course.domain;
 import com.tusry.universityregistration.enrollment.domain.Registration;
 import com.tusry.universityregistration.enrollment.domain.RegistrationStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CourseClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String courseCode;
-    int capacity;
-    int enrolledCount;
+    private Long id;
+    private String courseCode;
+    private int capacity;
+    private int enrolledCount;
+
+    @Version
+    private int version;
 
     @OneToMany(mappedBy = "courseClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Registration> registrations = new ArrayList<>();
@@ -47,6 +48,10 @@ public class CourseClass {
         return enrolledCount;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -61,6 +66,10 @@ public class CourseClass {
 
     public void setEnrolledCount(int enrolledCount) {
         this.enrolledCount = enrolledCount;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public void registerStudent(Long studentId){
