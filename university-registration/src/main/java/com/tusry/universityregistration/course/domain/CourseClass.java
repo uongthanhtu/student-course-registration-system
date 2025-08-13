@@ -1,6 +1,7 @@
 package com.tusry.universityregistration.course.domain;
 
 import com.tusry.universityregistration.enrollment.domain.Registration;
+import com.tusry.universityregistration.enrollment.domain.RegistrationStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -63,9 +64,28 @@ public class CourseClass {
     }
 
     public void registerStudent(Long studentId){
-        boolean already = registrations.stream().anyMatch(registration -> {
-            registration.
-        });
+        boolean already = registrations.stream().anyMatch(
+                registration -> registration.getStudentId().equals(studentId) && registration.isActive());
+        if (already){
+            throw new IllegalArgumentException("Student already registered this class");
+        }
+
+        if(enrolledCount >= capacity){
+            throw new IllegalArgumentException("Class is full, no availabel");
+        }
+
+        Registration registration = new Registration(this, studentId, RegistrationStatus.REGISTERED);
+        registrations.add(registration);
+        enrolledCount++;
+    };
+
+    public void cancelRegistration(Long studentId){
+        registrations.stream().filter(
+                registration -> registration.getStudentId().equals(studentId) && registration.isActive())
+                .findFirst().ifPresent(registration -> {
+                    registration.cancel();
+                    enrolledCount--;
+                });
     }
 
 
